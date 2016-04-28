@@ -209,10 +209,12 @@ class Channel(object):
 
         Return Types:
 
-            - A and AAAA: ``ares_query_simple_result``, fields:
+            - A and AAAA: ``ares_query_simple_result``
+             fields:
               - host
               - ttl
-            - CNAME: ``ares_query_cname_result``, fields:
+            - CNAME: ``ares_query_cname_result``
+             fields:
               - cname
               - ttl
             - MX: ``ares_query_mx_result``, fields:
@@ -272,7 +274,7 @@ class Channel(object):
 
     def destroy(self):
         """Destroy the channel. All pending requests will raise a
-        :exc:`~tdns.AresError` with the ``ARES_EDESTRUCTION `` errorno.
+        :exc:`~tdns.AresError` with the ``ARES_EDESTRUCTION`` errorno.
 
         :raises: :exc:`~tdns.AresError`
 
