@@ -1,0 +1,23 @@
+language: python
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+install:
+  - pip install -r requirements.txt
+script: nostests
+after_success:
+  - codecov
+deploy:
+  distributions: bdist_wheel sdist
+  provider: pypi
+  user: crad
+  on:
+    python: 2.7
+    tags: true
+    all_branches: true
+  password:
+    secure: "olJVO+xl85SlikEJhlOoHtWXBqeNXhW/hCVcqLwbjUZhT2IvNP7Lf0Is3j5Zy7M8WOSXPxnD6GGxeAj8I3195akkmvQLqiiZHAG6ZYZRQgKeS60cWiG2BB7AxO2KjcKOoUixqrD/QJ9HuOpFisJh6+dd3zDj4OVI+L54UTj7H4oT/RlYlkpSB33ijKrC/965TtFfhgk+ElUTBwzEqVGj8KdGWuzfk8UZ6X+dugDTHB7UdWETq33ib7to2/kdM3/09ZmNRFQSxSbYfnepUpPT5oXJyudfzBFTg6BnAEgZNfSbkhANRJ+L3Ix03D+SpULZa7PY5+UdbYBEkXnOIYkml+xBmRalnEEcGKfab+rwDRJ8aTjSzbuBjpUJCydzLUoEug+gyfYZAIxgYziolIlF+XQLPoIDZgaj6ntye+XqCUVbcwFOtqpQ8TSL1c0fGhC/xwpGbUe0NQ25WzJdVSEgyhNfUxSjupueM2FEmE5/u44o+Hs+CYS67ksxkENrKBzxkUT7GvctLkv31gnXLM4OUMdlMWqZ3fl5l4ukOxMYYo1MdTdbgBzGuJlLp3XyqrBUZFLqkQyVgF5Urngzoie/c+NljmtqbSo1lUdX4idTzdXMjt0u0rtG86dOUYPHKXsMA5CnyoPu2yH9gSvw2k8tSoV5S+aIpwE3GFsIMa0gsZU="
+cache:
+  directories:
+    - $HOME/.pip-cache/

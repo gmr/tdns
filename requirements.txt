@@ -1,0 +1,2 @@
+tornado>4
+pycares>=1,<2
