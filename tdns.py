@@ -209,19 +209,24 @@ class Channel(object):
 
         Return Types:
 
-            - A and AAAA: ``ares_query_simple_result``
-             fields:
+            - A and AAAA: ``ares_query_simple_result``, fields:
+
               - host
               - ttl
-            - CNAME: ``ares_query_cname_result``
-             fields:
+
+            - CNAME: ``ares_query_cname_result``, fields:
+
               - cname
               - ttl
+
             - MX: ``ares_query_mx_result``, fields:
+
               - host
               - priority
               - ttl
+
             - NAPTR: ``ares_query_naptr_result``, fields:
+
               - order
               - preference
               - flags
@@ -229,13 +234,19 @@ class Channel(object):
               - regex
               - replacement
               - ttl
+
             -  NS: ``ares_query_ns_result``, fields:
+
               - host
               - ttl
+
             - PTR: ``ares_query_ptr_result``, fields:
+
               - name
               - ttl
+
             - SOA: ``ares_query_soa_result``, fields:
+
               - nsmane
               - hostmaster
               - serial
@@ -244,13 +255,17 @@ class Channel(object):
               - expires
               - minttl
               - ttl
+
             - SRV: ``ares_query_srv_result``, fields:
+
               - host
               - port
               - priority
               - weight
               - ttl
+
             - TXT: ``ares_query_txt_result``, fields:
+
               - text
               - ttl
 
