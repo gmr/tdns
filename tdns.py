@@ -7,9 +7,9 @@ An asynchronous Tornado pycares DNS client wrapper, exporting the full API.
 from tornado import concurrent
 from tornado import ioloop
 
-import pycares
+import pycares.errno
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 __all__ = ['Channel',
            'AresError'
@@ -46,7 +46,32 @@ __all__ = ['Channel',
            'ARES_NI_LOOKUPSERVICE',
            'ARES_NI_IDN',
            'ARES_NI_IDN_ALLOW_UNASSIGNED',
-           'ARES_NI_IDN_USE_STD3_ASCII_RULES']
+           'ARES_NI_IDN_USE_STD3_ASCII_RULES'
+           'ARES_SUCCESS',
+           'ARES_ENODATA',
+           'ARES_EFORMERR',
+           'ARES_ESERVFAIL',
+           'ARES_ENOTFOUND',
+           'ARES_ENOTIMP',
+           'ARES_EREFUSED',
+           'ARES_EBADQUERY',
+           'ARES_EBADNAME',
+           'ARES_EBADFAMILY',
+           'ARES_EBADRESP',
+           'ARES_ECONNREFUSED',
+           'ARES_ETIMEOUT',
+           'ARES_EOF',
+           'ARES_EFILE',
+           'ARES_ENOMEM',
+           'ARES_EDESTRUCTION',
+           'ARES_EBADSTR',
+           'ARES_EBADFLAGS',
+           'ARES_ENONAME',
+           'ARES_EBADHINTS',
+           'ARES_ENOTINITIALIZED',
+           'ARES_ELOADIPHLPAPI',
+           'ARES_EADDRGETNETWORKPARAMS',
+           'ARES_ECANCELLED']
 
 AresError = pycares.AresError
 
@@ -87,6 +112,34 @@ ARES_NI_LOOKUPSERVICE = pycares.ARES_NI_LOOKUPSERVICE
 ARES_NI_IDN = pycares.ARES_NI_IDN
 ARES_NI_IDN_ALLOW_UNASSIGNED = pycares.ARES_NI_IDN_ALLOW_UNASSIGNED
 ARES_NI_IDN_USE_STD3_ASCII_RULES = pycares.ARES_NI_IDN_USE_STD3_ASCII_RULES
+
+# export pycares.errno constants too
+
+ARES_SUCCESS = pycares.errno.ARES_SUCCESS
+ARES_ENODATA = pycares.errno.ARES_ENODATA
+ARES_EFORMERR = pycares.errno.ARES_EFORMERR
+ARES_ESERVFAIL = pycares.errno.ARES_ESERVFAIL
+ARES_ENOTFOUND = pycares.errno.ARES_ENOTFOUND
+ARES_ENOTIMP = pycares.errno.ARES_ENOTIMP
+ARES_EREFUSED = pycares.errno.ARES_EREFUSED
+ARES_EBADQUERY = pycares.errno.ARES_EBADQUERY
+ARES_EBADNAME = pycares.errno.ARES_EBADNAME
+ARES_EBADFAMILY = pycares.errno.ARES_EBADFAMILY
+ARES_EBADRESP = pycares.errno.ARES_EBADRESP
+ARES_ECONNREFUSED = pycares.errno.ARES_ECONNREFUSED
+ARES_ETIMEOUT = pycares.errno.ARES_ETIMEOUT
+ARES_EOF = pycares.errno.ARES_EOF
+ARES_EFILE = pycares.errno.ARES_EFILE
+ARES_ENOMEM = pycares.errno.ARES_ENOMEM
+ARES_EDESTRUCTION = pycares.errno.ARES_EDESTRUCTION
+ARES_EBADSTR = pycares.errno.ARES_EBADSTR
+ARES_EBADFLAGS = pycares.errno.ARES_EBADFLAGS
+ARES_ENONAME = pycares.errno.ARES_ENONAME
+ARES_EBADHINTS = pycares.errno.ARES_EBADHINTS
+ARES_ENOTINITIALIZED = pycares.errno.ARES_ENOTINITIALIZED
+ARES_ELOADIPHLPAPI = pycares.errno.ARES_ELOADIPHLPAPI
+ARES_EADDRGETNETWORKPARAMS = pycares.errno.ARES_EADDRGETNETWORKPARAMS
+ARES_ECANCELLED = pycares.errno.ARES_ECANCELLED
 
 
 def reverse_address(ip_address):
@@ -143,7 +196,11 @@ class Channel(object):
 
     def __del__(self):  # pragma: no cover
         """Destroy the channel when deleting the object instance."""
-        self._channel.destroy()
+        try:
+            self._channel.destroy()
+        except pycares.AresError as e:
+            # raised when the channel has never been used
+            pass
 
     def gethostbyname(self, name, family):
         """Retrieves host information corresponding to a host name from a host
