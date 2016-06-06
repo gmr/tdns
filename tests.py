@@ -2,6 +2,7 @@ import socket
 import unittest
 
 from tornado import testing
+import pycares.errno
 
 import tdns
 
@@ -76,3 +77,9 @@ class ConstantExportTests(unittest.TestCase):
             if name.startswith(('QUERY_TYPE_', 'ARES_FLAG_', 'ARES_NI_')):
                 self.assertEqual(getattr(tdns, name),
                                  getattr(pycares, name))
+
+    def test_that_errno_constants_are_enumerated(self):
+        for name in dir(pycares.errno):
+            if name.startswith('ARES_'):
+                self.assertEqual(getattr(tdns, name),
+                                 getattr(pycares.errno, name))
