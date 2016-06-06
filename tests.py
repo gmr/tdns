@@ -1,4 +1,5 @@
 import socket
+import unittest
 
 from tornado import testing
 
@@ -66,3 +67,12 @@ class ChannelTests(testing.AsyncTestCase):
     def test_servers(self):
         self.channel.servers = ['4.4.4.4', '4.4.8.8']
         self.assertEqual(self.channel.servers, ['4.4.4.4', '4.4.8.8'])
+
+
+class ConstantExportTests(unittest.TestCase):
+
+    def test_that_top_level_constants_are_enumerated(self):
+        for name in dir(pycares):
+            if name.startswith(('QUERY_TYPE_', 'ARES_FLAG_', 'ARES_NI_')):
+                self.assertEqual(getattr(tdns, name),
+                                 getattr(pycares, name))
