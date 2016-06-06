@@ -143,7 +143,11 @@ class Channel(object):
 
     def __del__(self):  # pragma: no cover
         """Destroy the channel when deleting the object instance."""
-        self._channel.destroy()
+        try:
+            self._channel.destroy()
+        except pycares.AresError as e:
+            # raised when the channel has never been used
+            pass
 
     def gethostbyname(self, name, family):
         """Retrieves host information corresponding to a host name from a host
