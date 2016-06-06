@@ -21,7 +21,7 @@ requirements = ['pycares>=1,<2', 'tornado>=4.0']
 tests_require = ['nose', 'mock', 'codecov', 'coverage']
 
 setuptools.setup(name='tdns',
-                 version='0.1.0',
+                 version='0.2.0',
                  description='An asynchronous Tornado wrapper for pycares',
                  long_description=open('README.rst').read(),
                  author='Gavin M. Roy',
